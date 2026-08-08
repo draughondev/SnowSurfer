@@ -2209,7 +2209,7 @@ GameObject:
   m_Component:
   - component: {fileID: 595332535}
   - component: {fileID: 595332536}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Snowboarding Dino_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3141,7 +3141,7 @@ GameObject:
   - component: {fileID: 964105966}
   - component: {fileID: 964105968}
   - component: {fileID: 964105967}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Crash Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
