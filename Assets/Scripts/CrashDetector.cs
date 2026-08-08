@@ -5,6 +5,13 @@ public class CrashDetector : MonoBehaviour
 {
     [SerializeField] float delay = 1f;
     [SerializeField] ParticleSystem crashParticles;
+    
+    PlayerController playerController;
+
+    void Start()
+    {
+        playerController = FindAnyObjectByType<PlayerController>();
+    }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
@@ -12,10 +19,13 @@ public class CrashDetector : MonoBehaviour
 
         if (collision.gameObject.layer == layerIndex)
         {
+            playerController.DisableControls();
             crashParticles.Play();
             Invoke("ReloadScene", delay);
         }
     }
+
+
 
     void ReloadScene()
     {

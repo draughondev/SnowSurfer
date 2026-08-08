@@ -1,5 +1,8 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class PlayerController : MonoBehaviour
 {
@@ -11,8 +14,12 @@ public class PlayerController : MonoBehaviour
     InputAction moveAction;
     Rigidbody2D myRigidbody2D;
     SurfaceEffector2D surfaceEffector2D;
+    ScoreManager scoreManager;
 
     Vector2 moveVector;
+    bool canControlPlayer = true;
+    float previousRotation;
+    float totalRotation;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -20,13 +27,20 @@ public class PlayerController : MonoBehaviour
         moveAction = InputSystem.actions.FindAction("Move");
         myRigidbody2D = GetComponent<Rigidbody2D>();
         surfaceEffector2D = FindAnyObjectByType<SurfaceEffector2D>();
+        scoreManager = FindAnyObjectByType<ScoreManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        RotatePlayer();
-        BoostPlayer();
+
+        if (canControlPlayer)
+        {
+            RotatePlayer();
+            BoostPlayer();
+            CalculateFlips();
+        }
+
     }
 
     void RotatePlayer()
@@ -52,5 +66,25 @@ public class PlayerController : MonoBehaviour
         {
             surfaceEffector2D.speed = baseSpeed;
         }
+    }
+
+    void CalculateFlips()
+    {
+        float currentRotation = transform.rotation.eulerAngles.z;
+        
+        totalRotation += Mathf.DeltaAngle(previousRotation, currentRotation);
+
+        if (Mathf.Abs(totalRotation) > 345)
+        {
+            totalRotation = 0;
+            scoreManager.AddScore(100);
+        }
+
+        previousRotation = currentRotation;
+    }
+
+    public void DisableControls()
+    {
+        canControlPlayer = false;
     }
 }
