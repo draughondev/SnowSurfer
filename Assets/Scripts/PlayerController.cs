@@ -10,11 +10,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float torqueAmount = 11f;
     [SerializeField] float boostSpeed = 23f;
     [SerializeField] float baseSpeed = 15f;
+    [SerializeField] ParticleSystem powerupParticles;
+    [SerializeField] ScoreManager scoreManager;
 
     InputAction moveAction;
     Rigidbody2D myRigidbody2D;
     SurfaceEffector2D surfaceEffector2D;
-    ScoreManager scoreManager;
 
     Vector2 moveVector;
     bool canControlPlayer = true;
@@ -27,7 +28,6 @@ public class PlayerController : MonoBehaviour
         moveAction = InputSystem.actions.FindAction("Move");
         myRigidbody2D = GetComponent<Rigidbody2D>();
         surfaceEffector2D = FindAnyObjectByType<SurfaceEffector2D>();
-        scoreManager = FindAnyObjectByType<ScoreManager>();
     }
 
     // Update is called once per frame
@@ -86,5 +86,37 @@ public class PlayerController : MonoBehaviour
     public void DisableControls()
     {
         canControlPlayer = false;
+    }
+
+    public void ActivatePowerup(PowerupSO powerup)
+    {
+        powerupParticles.Play();
+
+        if (powerup.GetPowerupType() == "speed")
+        {
+            baseSpeed += powerup.GetValueChange();
+            boostSpeed += powerup.GetValueChange();
+        }
+
+        if (powerup.GetPowerupType() == "torque")
+        {
+            torqueAmount += powerup.GetValueChange();
+        }
+    }
+
+    public void DeactivatePowerup(PowerupSO powerup)
+    {
+        powerupParticles.Stop();
+        
+        if (powerup.GetPowerupType() == "speed")
+        {
+            baseSpeed -= powerup.GetValueChange();
+            boostSpeed -= powerup.GetValueChange();
+        }
+
+        if (powerup.GetPowerupType() == "torque")
+        {
+            torqueAmount -= powerup.GetValueChange();
+        }
     }
 }
