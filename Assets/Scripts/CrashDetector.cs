@@ -1,10 +1,10 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class FinishLine : MonoBehaviour
+public class CrashDetector : MonoBehaviour
 {
     [SerializeField] float delay = 1f;
-    [SerializeField] ParticleSystem finishParticles;
+    [SerializeField] ParticleSystem crashParticles;
 
     void OnTriggerEnter2D(Collider2D collision)
     {
@@ -12,7 +12,7 @@ public class FinishLine : MonoBehaviour
 
         if (collision.gameObject.layer == layerIndex)
         {
-            finishParticles.Play();
+            crashParticles.Play();
             Invoke("ReloadScene", delay);
         }
     }
