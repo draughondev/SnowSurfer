@@ -4,9 +4,9 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
 
-    [SerializeField] float torqueAmount = 1f;
-    [SerializeField] float boostSpeed = 28f;
-    [SerializeField] float baseSpeed = 19f;
+    [SerializeField] float torqueAmount = 11f;
+    [SerializeField] float boostSpeed = 23f;
+    [SerializeField] float baseSpeed = 15f;
 
     InputAction moveAction;
     Rigidbody2D myRigidbody2D;
