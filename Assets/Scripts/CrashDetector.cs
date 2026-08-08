@@ -1,19 +1,18 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class FinishLine : MonoBehaviour
+public class CrashDetector : MonoBehaviour
 {
     [SerializeField] float delay = 1f;
-    [SerializeField] ParticleSystem finishParticles;
+    [SerializeField] ParticleSystem crashParticles;
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        int layerIndex = LayerMask.NameToLayer("Player");
+        int layerIndex = LayerMask.NameToLayer("Floor");
 
         if (collision.gameObject.layer == layerIndex)
         {
-            finishParticles.Play();
+            crashParticles.Play();
             Invoke("ReloadScene", delay);
         }
     }
